@@ -1,34 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   filler.h                                           :+:      :+:    :+:   */
+/*   ft_strchri.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: enennige <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/13 12:05:37 by enennige          #+#    #+#             */
-/*   Updated: 2018/05/15 15:45:27 by enennige         ###   ########.fr       */
+/*   Created: 2018/05/15 15:12:40 by enennige          #+#    #+#             */
+/*   Updated: 2018/05/15 15:20:36 by enennige         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*FOR DEGUBBING ONLY */
-#include <stdio.h>
-/* END DEBUGGING */
+/*
+** The ft_strchri() function locates the first occurrence of c (converted to a
+** char) in the string pointed to by s and returns it's index
+*/
 
-#include <unistd.h>
 #include "libft.h"
 
-typedef struct		s_game
+int		ft_strchri(const char *s, int c)
 {
-	int				rows;
-	int				cols;
-	unsigned char	player_char;
-}					t_game;
+	int i;
 
-typedef struct		s_turn
-{
-	char			**board_map;
-	int				piece_rows;
-	int				piece_cols;
-	char			**piece_map;
-}					t_turn;
-
+	i = 0;
+	while (s[i] != '\0')
+	{
+		if (s[i] == c)
+		{
+			return (i);
+		}
+		i++;
+	}
+	return (0);
+}

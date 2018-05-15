@@ -6,7 +6,7 @@
 #    By: enennige <enennige@student.42.us.or>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/21 17:45:07 by enennige          #+#    #+#              #
-#    Updated: 2018/05/14 14:57:43 by enennige         ###   ########.fr        #
+#    Updated: 2018/05/15 15:13:54 by enennige         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRC_NAME	=	ft_memset.c \
 				ft_strncat.c \
 				ft_strlcat.c \
 				ft_strchr.c \
+				ft_strchri.c \
 				ft_strrchr.c \
 				ft_strstr.c \
 				ft_strnstr.c \
@@ -44,6 +45,7 @@ SRC_NAME	=	ft_memset.c \
 				ft_memdel.c \
 				ft_strnew.c \
 				ft_strdel.c \
+				ft_strarrdel.c \
 				ft_strclr.c \
 				ft_striter.c \
 				ft_striteri.c \
@@ -82,7 +84,8 @@ SRC_NAME	=	ft_memset.c \
 				ft_gotonextword.c \
 				ft_printlst.c \
 				ft_realloc.c \
-				ft_addnfix.c
+				ft_addnfix.c \
+				ft_readline.c
 
 OBJ_NAME	=	$(SRC_NAME:.c=.o)
 SRC			=	$(addprefix $(SRC_PATH), $(SRC_NAME))

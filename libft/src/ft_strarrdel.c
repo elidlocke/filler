@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   filler.h                                           :+:      :+:    :+:   */
+/*   ft_strarrdel.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: enennige <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/13 12:05:37 by enennige          #+#    #+#             */
-/*   Updated: 2018/05/15 15:45:27 by enennige         ###   ########.fr       */
+/*   Created: 2018/05/15 14:47:03 by enennige          #+#    #+#             */
+/*   Updated: 2018/05/15 14:57:50 by enennige         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*FOR DEGUBBING ONLY */
-#include <stdio.h>
-/* END DEBUGGING */
-
-#include <unistd.h>
 #include "libft.h"
 
-typedef struct		s_game
+/*
+** Free an array of strings
+*/
+void    ft_strarrdel(char **str_arr)
 {
-	int				rows;
-	int				cols;
-	unsigned char	player_char;
-}					t_game;
+    int i;
 
-typedef struct		s_turn
-{
-	char			**board_map;
-	int				piece_rows;
-	int				piece_cols;
-	char			**piece_map;
-}					t_turn;
-
+    i = 0;
+    while (str_arr[i] != NULL)
+    {
+        ft_strdel(&(str_arr[i]));
+        i++;
+    }
+    free(str_arr);
+}
