@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_getnextline.h                                   :+:      :+:    :+:   */
+/*   init_structs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: enennige <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/13 10:53:07 by enennige          #+#    #+#             */
-/*   Updated: 2018/05/13 11:37:18 by enennige         ###   ########.fr       */
+/*   Created: 2018/05/14 18:46:32 by enennige          #+#    #+#             */
+/*   Updated: 2018/05/14 19:56:19 by enennige         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# include <stdlib.h>
-# include <sys/types.h>
-# include <sys/uio.h>
-# include <unistd.h>
-# include "libft.h"
-# define BUFF_SIZE 42
-# define MAX_FD 4864
-
-int					read_file(int fd, char **file);
-typedef	struct		s_file
+t_board	init_game(t_board *game)
 {
-	char			*head;
-	char			*reader;
-}					t_file;
+	game->rows = 0;
+	game->columns = 0;
+	game->player_char = 'e';
+}
 
-#endif
+t_board init_piece(t_piece *piece)
+{
+	piece->rows = 0;
+	piece->columns = 0;
+}
