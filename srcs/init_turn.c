@@ -6,7 +6,7 @@
 /*   By: enennige <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 20:08:03 by enennige          #+#    #+#             */
-/*   Updated: 2018/05/15 20:57:48 by enennige         ###   ########.fr       */
+/*   Updated: 2018/05/16 13:09:10 by enennige         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void    set_map(t_game game, t_turn *turn)
     while (i < game.rows)
     {
         ft_readline(0, &line);
+		// TODO: THIS IS A BUG, as line can start with OoXx or . v
         turn->board_map[i] = ft_strsub(line, ft_strchri(line, '.'), game.cols);
         ft_strdel(&line);
         i++;
@@ -42,8 +43,8 @@ void    set_piece_dims(t_turn *turn)
     str_dims = ft_strsplit(line, ' ');
     turn->piece_rows = ft_atoi(str_dims[1]);
     turn->piece_cols = ft_atoi(str_dims[2]);
-    fprintf(stderr, "\e[1;34mPIECE ROWS: |%d| & PIECE COLS: |%d|\n\e[0m",
-            turn->piece_rows, turn->piece_cols);
+    //fprintf(stderr, "\e[1;34mPIECE ROWS: |%d| & PIECE COLS: |%d|\n\e[0m",
+    //        turn->piece_rows, turn->piece_cols);
     ft_strarrdel(str_dims);
     ft_strdel(&line);
 }
@@ -75,18 +76,17 @@ void	set_startpoint(t_game game, t_turn *turn)
 
 	str_arr = turn->board_map;	
 	r = 0;
-	fprintf(stderr, "\e[1;34m%c\e[0m", game.player_char);
 	while (str_arr[r] != NULL)
 	{
 		c = 0;
 		while (str_arr[r][c] != '\0')
 		{
-			fprintf(stderr, "\e[1;34m%c\e[0m", str_arr[r][c]);
+			//fprintf(stderr, "\e[1;34m%c\e[0m", str_arr[r][c]);
 			if (str_arr[r][c] == game.player_char ||
 				ft_toupper(str_arr[r][c]) == game.player_char)
 			{
-				turn->row_starti = r;
-				turn->col_starti = c;
+				turn->start_row = r;
+				turn->start_col = c;
 				return;
 			}
 			c++;

@@ -6,7 +6,7 @@
 /*   By: enennige <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 10:28:19 by enennige          #+#    #+#             */
-/*   Updated: 2018/05/15 20:57:44 by enennige         ###   ########.fr       */
+/*   Updated: 2018/05/16 13:08:00 by enennige         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,27 @@ void	print_arr(char **arr)
 }
 
 
+//debugging function -- delete
+void	print_num_arr(int **arr, int rows, int cols)
+{
+	int r;
+	int c;
+
+	fprintf(stderr, "\e[1;34m NUM ARRAY:\n\e[0m");
+	r = 0;
+	while (r < rows)
+	{
+		c = 0;
+		while (c < cols)
+		{
+			fprintf(stderr, "\e[1;34m%d\e[0m", arr[r][c]);
+			c++;
+		}
+		fprintf(stderr, "\n");
+		r++;
+	}
+}
+
 int main(void)
 {
 	t_game	game;
@@ -39,8 +60,13 @@ int main(void)
 	print_arr(turn.piece_map);
 	fprintf(stderr, "\e[1;34mGOT PLAYER %c\n\e[0m", game.player_char);
 	fprintf(stderr, "\e[1;34m STARTING AT row|%d| col|%d|\n\e[0m",
-			turn.row_starti, turn.col_starti);
+			turn.start_row, turn.start_col);
+	init_heat_map(game, &turn);
+	print_num_arr(turn.heatmap_init, game.rows, game.cols);
+	get_enemy_map(game, &turn);
+	print_num_arr(turn.heatmap_enemy, game.rows, game.cols);
 	
-	printf("1 1\n");
+	// TAKE TURN
+	printf("%d %d\n", turn.start_row, turn.start_col);
 	return (0);
 }
