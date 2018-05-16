@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_structs.c                                     :+:      :+:    :+:   */
+/*   create_num_matrix.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: enennige <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/14 18:46:32 by enennige          #+#    #+#             */
-/*   Updated: 2018/05/14 19:56:19 by enennige         ###   ########.fr       */
+/*   Created: 2018/05/15 20:14:59 by enennige          #+#    #+#             */
+/*   Updated: 2018/05/15 20:57:39 by enennige         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-t_board	init_game(t_board *game)
-{
-	game->rows = 0;
-	game->columns = 0;
-	game->player_char = 'e';
-}
+//flood fill out, decrementing number by 1, including diagonal directions
 
-t_board init_piece(t_piece *piece)
-{
-	piece->rows = 0;
-	piece->columns = 0;
-}
+
+//-1 for me, -2 for enemy
+// repeat flood fill, with opposite count for myself
+

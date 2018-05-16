@@ -6,7 +6,7 @@
 #    By: enennige <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/12 11:24:58 by enennige          #+#    #+#              #
-#    Updated: 2018/05/14 14:13:58 by enennige         ###   ########.fr        #
+#    Updated: 2018/05/15 20:03:20 by enennige         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ CC = gcc
 NAME = enennige.filler
 CFLAGS = -Wall -Wextra -Werror
 SRC_PATH = srcs/
-SRC_NAME = main.c
+SRC_NAME = main.c init_game.c init_turn.c
 SRCS = $(addprefix $(SRC_PATH), $(SRC_NAME))
 OBJS = $(patsubst %.c, %.o, $(SRC_NAME))
 LIB_NAME = libft
