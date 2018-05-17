@@ -6,7 +6,7 @@
 #    By: enennige <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/12 11:24:58 by enennige          #+#    #+#              #
-#    Updated: 2018/05/16 11:41:00 by enennige         ###   ########.fr        #
+#    Updated: 2018/05/17 10:43:34 by enennige         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ CC = gcc
 NAME = enennige.filler
 CFLAGS = -Wall -Wextra -Werror
 SRC_PATH = srcs/
-SRC_NAME = main.c init_game.c init_turn.c create_num_heatmaps.c
+SRC_NAME = main.c init_game.c init_turn.c create_num_heatmaps.c place_piece.c
+SRC_NAME += utils.c
 SRCS = $(addprefix $(SRC_PATH), $(SRC_NAME))
 OBJS = $(patsubst %.c, %.o, $(SRC_NAME))
 LIB_NAME = libft

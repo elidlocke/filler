@@ -6,7 +6,7 @@
 /*   By: enennige <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 20:08:03 by enennige          #+#    #+#             */
-/*   Updated: 2018/05/16 20:00:21 by enennige         ###   ########.fr       */
+/*   Updated: 2018/05/17 09:56:14 by enennige         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,39 +68,9 @@ void    set_piece(t_turn *turn)
     turn->piece_map[i] = NULL;
 }
 
-/*
-void	set_startpoint(t_game game, t_turn *turn)
-{
-	char	**str_arr;
-	int		c;
-	int		r;
-
-	str_arr = turn->board_map;	
-	r = 0;
-	while (str_arr[r] != NULL)
-	{
-		c = 0;
-		while (str_arr[r][c] != '\0')
-		{
-			//fprintf(stderr, "\e[1;34m%c\e[0m", str_arr[r][c]);
-			if (str_arr[r][c] == game.player_char ||
-				ft_toupper(str_arr[r][c]) == game.player_char)
-			{
-				turn->start_row_self = r;
-				turn->start_col_self = c;
-				return;
-			}
-			c++;
-		}
-		r++;
-	}
-}
-*/
-
 void	init_turn(t_game game, t_turn *turn)
 {
     set_map(game, turn);
     set_piece_dims(turn);
     set_piece(turn);
-	//set_startpoint(game, turn);
 }

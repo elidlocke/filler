@@ -6,7 +6,7 @@
 /*   By: enennige <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 11:39:37 by enennige          #+#    #+#             */
-/*   Updated: 2018/05/16 20:24:41 by enennige         ###   ########.fr       */
+/*   Updated: 2018/05/17 10:16:42 by enennige         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ int		get_heat_map_init_value(char game_char, char player_char)
 		num_value = 0;
 	else if (game_char == player_char ||
 			ft_toupper(game_char) == player_char)
-		num_value = -1;
+		num_value = PLAYER_NUM;
 	else
-		num_value = -2;
+		num_value = ENEMY_NUM;
 	return (num_value);
 }
 
@@ -53,14 +53,6 @@ void	init_heat_map(t_game game, t_turn *turn, char type)
 		turn->heatmap_self = arr;
 }
 
-int		is_on_board(t_game game, int start_row, int start_col)
-{
-	if ((start_row >= 0 && start_row < game.rows) &&
-		(start_col >= 0 && start_col < game.cols))
-		return (1);
-	return (0);
-}
-
 //fill it with starting values for myself and for enemy
 void	set_number(int **board, t_game game,
 							int start_row, int start_col, int fill_num)
@@ -81,14 +73,6 @@ void	set_number(int **board, t_game game,
 		board[start_row + 1][start_col - 1] = fill_num;
 	if (is_on_board(game, start_row - 1, start_col + 1) && board[start_row - 1][start_col + 1] == 0)
 		board[start_row - 1][start_col + 1] = fill_num;
-}
-
-/* Could refactor to get the max number from any x point to the edge */
-int		get_bigger_num(int a, int b)
-{
-	if (a >= b)
-		return a;
-	return b;
 }
 
 void	fill_map(t_game game, int **map, int direction, int obj_value)
@@ -128,24 +112,24 @@ void	combine_heatmaps(t_game game, t_turn *turn)
 	int r;
 	int c;
 
-	if (!(turn->heatmap_ultimate = (int **)malloc(sizeof(int *) * game.rows)))
+	if (!(turn->heatmap= (int **)malloc(sizeof(int *) * game.rows)))
 		return ;
 	r = 0;
 	while (r < game.rows)
 	{
-		if (!(turn->heatmap_ultimate[r] = (int *)malloc(sizeof(int) * game.cols)))
+		if (!(turn->heatmap[r] = (int *)malloc(sizeof(int) * game.cols)))
 			return ;
 		c = 0;
 		while (c < game.cols)
 		{
 			if (turn->heatmap_self[r][c] < 0)
 			{
-				turn->heatmap_ultimate[r][c] = turn->heatmap_self[r][c];
+				turn->heatmap[r][c] = turn->heatmap_self[r][c];
 			}
 			else
 			{
-				turn->heatmap_ultimate[r][c] = turn->heatmap_self[r][c]
-												+ turn->heatmap_enemy[r][c];
+				turn->heatmap[r][c] = turn->heatmap_self[r][c]
+									+ turn->heatmap_enemy[r][c];
 			}
 			c++;
 		}
@@ -155,10 +139,10 @@ void	combine_heatmaps(t_game game, t_turn *turn)
 
 void	make_maps(t_game game, t_turn *turn)
 {
-	fill_map(game, turn->heatmap_self, -1, -1);
-	fill_map(game, turn->heatmap_enemy, 1, -2);
+	init_heat_map(game, turn, 's');
+	fill_map(game, turn->heatmap_self, -1, PLAYER_NUM);
+	init_heat_map(game, turn, 'e');
+	fill_map(game, turn->heatmap_enemy, 1, ENEMY_NUM);
 	combine_heatmaps(game, turn);
 }
-
-// repeat flood fill, with opposite count for myself
 
