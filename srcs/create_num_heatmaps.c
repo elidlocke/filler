@@ -6,38 +6,51 @@
 /*   By: enennige <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 11:39:37 by enennige          #+#    #+#             */
-/*   Updated: 2018/05/16 13:32:47 by enennige         ###   ########.fr       */
+/*   Updated: 2018/05/16 20:24:41 by enennige         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-//create a board of the size that can hold integers
-void	init_heat_map(t_game game, t_turn *turn)
+int		get_heat_map_init_value(char game_char, char player_char)
+{
+	int num_value;
+
+	if (game_char == '.')
+		num_value = 0;
+	else if (game_char == player_char ||
+			ft_toupper(game_char) == player_char)
+		num_value = -1;
+	else
+		num_value = -2;
+	return (num_value);
+}
+
+void	init_heat_map(t_game game, t_turn *turn, char type)
 {
 	int r;
 	int c;
+	int **arr;
 
-	if (!(turn->heatmap_init = (int **)malloc(sizeof(int *) * (game.rows))))
+	if (!(arr = (int **)malloc(sizeof(int *) * (game.rows))))
 		return ;
 	r = 0;
 	while (r < game.rows)
 	{
-		turn->heatmap_init[r] = (int *)malloc(sizeof(int *) * (game.cols));
+		arr[r] = (int *)malloc(sizeof(int *) * (game.cols));
 		c = 0;
 		while (c < game.cols)
 		{
-			if (turn->board_map[r][c] == '.')
-				turn->heatmap_init[r][c] = 0;
-			else if (turn->board_map[r][c] == game.player_char ||
-					ft_toupper(turn->board_map[r][c]) == game.player_char)
-				turn->heatmap_init[r][c] = -1;
-			else
-				turn->heatmap_init[r][c] = -2;
+			arr[r][c] = get_heat_map_init_value(turn->board_map[r][c],
+												game.player_char);
 			c++;
 		}
 		r++;
 	}
+	if (type == 'e')
+		turn->heatmap_enemy = arr;
+	else
+		turn->heatmap_self = arr;
 }
 
 int		is_on_board(t_game game, int start_row, int start_col)
@@ -52,17 +65,14 @@ int		is_on_board(t_game game, int start_row, int start_col)
 void	set_number(int **board, t_game game,
 							int start_row, int start_col, int fill_num)
 {
-	fprintf(stderr, "\e[1;34mrow: %d col: %d\e[0m", start_row, start_col);
 	if (is_on_board(game, start_row + 1, start_col) && board[start_row + 1][start_col] == 0)
 		board[start_row + 1][start_col] = fill_num;
 	if (is_on_board(game, start_row, start_col + 1) && board[start_row][start_col + 1] == 0)
 		board[start_row][start_col + 1]  = fill_num;
-	
 	if (is_on_board(game, start_row - 1, start_col) && board[start_row - 1][start_col] == 0)
 		board[start_row - 1][start_col] = fill_num;
 	if (is_on_board(game, start_row, start_col - 1) && board[start_row][start_col - 1] == 0)
 		board[start_row][start_col - 1] = fill_num;
-	
 	if (is_on_board(game, start_row + 1, start_col + 1) && board[start_row + 1][start_col + 1] == 0)
 		board[start_row + 1][start_col + 1] = fill_num;
 	if (is_on_board(game, start_row - 1, start_col - 1) && board[start_row - 1][start_col - 1] == 0)
@@ -73,14 +83,81 @@ void	set_number(int **board, t_game game,
 		board[start_row - 1][start_col + 1] = fill_num;
 }
 
-void	get_enemy_map(t_game game, t_turn *turn)
+/* Could refactor to get the max number from any x point to the edge */
+int		get_bigger_num(int a, int b)
 {
-	//dup the init'd map instead of modifying it!!
-	turn->heatmap_enemy = turn->heatmap_init;
-	while (i < game.rows)
+	if (a >= b)
+		return a;
+	return b;
+}
+
+void	fill_map(t_game game, int **map, int direction, int obj_value)
+{
+	int r;
+	int c;
+	int	fill_num;
+	int max_num;
+
+	max_num = get_bigger_num(game.rows, game.cols) + 1;
+	if (direction == -1)
+		fill_num = max_num - 1;
+	else
+		fill_num = 1;
+	while (fill_num != 0 && fill_num != max_num)
 	{
-		set_number(turn->heatmap_enemy, game, turn->start_row + 1, turn->start_col, 1);
+		r = 0;
+		while (r < game.rows)
+		{
+			c = 0;
+			while (c < game.cols)
+			{
+				if (map[r][c] == obj_value)
+					set_number(map, game, r, c, fill_num);
+				else if (map[r][c] == fill_num)
+					set_number(map, game, r, c, fill_num + direction);
+				c++;
+			}
+			r++;
+		}
+		fill_num += direction;
 	}
+}
+
+void	combine_heatmaps(t_game game, t_turn *turn)
+{
+	int r;
+	int c;
+
+	if (!(turn->heatmap_ultimate = (int **)malloc(sizeof(int *) * game.rows)))
+		return ;
+	r = 0;
+	while (r < game.rows)
+	{
+		if (!(turn->heatmap_ultimate[r] = (int *)malloc(sizeof(int) * game.cols)))
+			return ;
+		c = 0;
+		while (c < game.cols)
+		{
+			if (turn->heatmap_self[r][c] < 0)
+			{
+				turn->heatmap_ultimate[r][c] = turn->heatmap_self[r][c];
+			}
+			else
+			{
+				turn->heatmap_ultimate[r][c] = turn->heatmap_self[r][c]
+												+ turn->heatmap_enemy[r][c];
+			}
+			c++;
+		}
+		r++;
+	}
+}
+
+void	make_maps(t_game game, t_turn *turn)
+{
+	fill_map(game, turn->heatmap_self, -1, -1);
+	fill_map(game, turn->heatmap_enemy, 1, -2);
+	combine_heatmaps(game, turn);
 }
 
 // repeat flood fill, with opposite count for myself
