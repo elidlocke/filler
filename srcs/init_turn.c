@@ -6,7 +6,7 @@
 /*   By: enennige <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 20:08:03 by enennige          #+#    #+#             */
-/*   Updated: 2018/05/17 09:56:14 by enennige         ###   ########.fr       */
+/*   Updated: 2018/05/17 14:43:18 by enennige         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ void    set_map(t_game game, t_turn *turn)
     while (i < game.rows)
     {
         ft_readline(0, &line);
-		// TODO: THIS IS A BUG, as line can start with OoXx or . v
-        turn->board_map[i] = ft_strsub(line, ft_strchri(line, '.'), game.cols);
+        turn->board_map[i] = ft_strsub(line, ft_strchri(line, ' ') + 1, game.cols);
         ft_strdel(&line);
         i++;
     }
@@ -70,7 +69,11 @@ void    set_piece(t_turn *turn)
 
 void	init_turn(t_game game, t_turn *turn)
 {
-    set_map(game, turn);
+    turn->place_col = -1;
+	turn->place_row = -1;
+	turn->piece_rows = -1;
+	turn->piece_cols = -1;
+	set_map(game, turn);
     set_piece_dims(turn);
     set_piece(turn);
 }

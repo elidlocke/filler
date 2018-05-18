@@ -6,7 +6,7 @@
 /*   By: enennige <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 12:05:37 by enennige          #+#    #+#             */
-/*   Updated: 2018/05/17 10:40:24 by enennige         ###   ########.fr       */
+/*   Updated: 2018/05/17 14:34:38 by enennige         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,6 @@ void				init_game(t_game *game);
 void				init_turn(t_game game, t_turn *turn);
 void				make_maps(t_game game, t_turn *turn);
 void				place_piece(t_game game, t_turn *turn);
-/* MAYBE CLEAN UP */
+void				clear_turn(t_game game, t_turn *turn);
 
 #endif
