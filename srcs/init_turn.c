@@ -69,11 +69,11 @@ void    set_piece(t_turn *turn)
 
 void	init_turn(t_game game, t_turn *turn)
 {
-    turn->place_col = -1;
-	turn->place_row = -1;
+	turn->place_col = ERROR;
+	turn->place_row = ERROR;
 	turn->piece_rows = -1;
 	turn->piece_cols = -1;
 	set_map(game, turn);
-    set_piece_dims(turn);
-    set_piece(turn);
+	set_piece_dims(turn);
+	set_piece(turn);
 }

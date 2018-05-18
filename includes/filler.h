@@ -22,7 +22,7 @@
 
 # define PLAYER_NUM -1
 # define ENEMY_NUM -2
-# define ERROR -1
+# define ERROR -2147483648
 
 typedef struct		s_game
 {
@@ -39,6 +39,8 @@ typedef struct		s_turn
 	int				**heatmap;
 	int				piece_rows;
 	int				piece_cols;
+	int				r_offset;
+	int				c_offset;
 	char			**piece_map;
 	int				place_row;
 	int				place_col;

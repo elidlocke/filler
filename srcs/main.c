@@ -82,14 +82,14 @@ int main(void)
 		place_piece(game, &turn);
 		clear_turn(game, &turn);
 		//fprintf(stderr, "\e[1;34mPLAYING [%d %d]\n\e[0m", turn.place_row, turn.place_col);
-		if (turn.place_row != -1 && turn.place_col != -1)
-		{
-			print_move(turn.place_row, turn.place_col);
-		}
-		else
+		if (turn.place_row == ERROR)
 		{
 			print_move(0,0);
 			can_move = 0;
+		}
+		else
+		{
+			print_move(turn.place_row, turn.place_col);
 		}
 	}
 	return (0);
