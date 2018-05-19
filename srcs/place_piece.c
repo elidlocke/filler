@@ -6,47 +6,52 @@
 /*   By: enennige <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 08:51:02 by enennige          #+#    #+#             */
-/*   Updated: 2018/05/18 19:17:15 by enennige         ###   ########.fr       */
+/*   Updated: 2018/05/19 16:48:56 by enennige         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-int	get_location_value(t_game game, t_turn *turn, int r, int c)
+int		validate_location(t_game game, t_turn *turn, int *coor, int *oflag)
 {
-	int	location_value_sum;
-	int	oflag;
-	int pc;
-	int pr;
+	if (!(is_on_board(game, coor[0], coor[1])))
+		return (-1);
+	else if (turn->heatmap[coor[0]][coor[1]] == ENEMY_NUM)
+		return (-1);
+	else if (*oflag && turn->heatmap[coor[0]][coor[1]] == PLAYER_NUM)
+		return (-1);
+	else if (turn->heatmap[coor[0]][coor[1]] == PLAYER_NUM)
+		*oflag = 1;
+	return (0);
+}
 
-	oflag = 0;
-	location_value_sum = 0;
-	pr = 0;
-	while (pr < turn->piece_rows)
+int		get_location_value(t_game game, t_turn *turn, int *coor, int oflag)
+{
+	int sum_coor[2];
+	int pcoor[2];
+
+	turn->place_value = 0;
+	pcoor[0] = 0;
+	while (pcoor[0] < turn->piece_rows)
 	{
-		pc = 0;
-		while (pc < turn->piece_cols)
+		pcoor[1] = 0;
+		while (pcoor[1] < turn->piece_cols)
 		{
-			if (turn->piece_map[pr][pc] == '*')
+			if (turn->piece_map[pcoor[0]][pcoor[1]] == '*')
 			{
-				if (!(is_on_board(game, pr + r, pc + c)))
+				sum_coor[0] = pcoor[0] + coor[0];
+				sum_coor[1] = pcoor[1] + coor[1];
+				if (validate_location(game, turn, sum_coor, &oflag) == -1)
 					return (-1);
-				else if (turn->heatmap[pr + r][pc + c] == ENEMY_NUM)
-					return (-1);
-				else if (oflag && turn->heatmap[pr + r][pc + c] == PLAYER_NUM)
-					return (-1);
-				else if (turn->heatmap[pr + r][pc + c] == PLAYER_NUM)
-					oflag = 1;
-				else
-					location_value_sum += turn->heatmap[pr + r][pc + c];
+				turn->place_value += turn->heatmap[sum_coor[0]][sum_coor[1]];
 			}
-			pc++;
+			pcoor[1]++;
 		}
-		pr++;
+		pcoor[0]++;
 	}
 	if (oflag == 0)
 		return (-1);
-	return (location_value_sum);
+	return (turn->place_value);
 }
 
 void	set_piece_offset(t_turn *turn)
@@ -77,28 +82,29 @@ void	set_piece_offset(t_turn *turn)
 
 void	place_piece(t_game game, t_turn *turn)
 {
-	int r;
-	int c;
+	int coor[2];
 	int sum;
 	int	min_sum;
+	int	oflag;
 
 	set_piece_offset(turn);
 	min_sum = ERROR;
-	r = turn->r_offset * -1;
-	while (r < game.rows)
-	{	
-		c = turn->c_offset * -1;
-		while (c < game.cols)
+	coor[0] = turn->r_offset * -1;
+	while (coor[0] < game.rows)
+	{
+		coor[1] = turn->c_offset * -1;
+		while (coor[1] < game.cols)
 		{
-			sum = get_location_value(game, turn, r, c);
+			oflag = 0;
+			sum = get_location_value(game, turn, coor, oflag);
 			if (sum > 0 && (sum < min_sum || min_sum == ERROR))
 			{
 				min_sum = sum;
-				turn->place_row = r;
-				turn->place_col = c;
+				turn->place_row = coor[0];
+				turn->place_col = coor[1];
 			}
-			c++;
+			coor[1]++;
 		}
-		r++;
+		coor[0]++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: enennige <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/18 17:22:04 by enennige          #+#    #+#             */
-/*   Updated: 2018/05/18 19:58:37 by enennige         ###   ########.fr       */
+/*   Updated: 2018/05/19 12:33:00 by enennige         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,4 @@ void	init_heatmaps(t_game game, t_turn *turn)
 	init_heatmap(game, turn, SELF);
 	init_heatmap(game, turn, ENEMY);
 	init_heatmap(game, turn, OPPOSITE_CORNER);
-	print_num_arr(turn->heatmap, game.rows, game.cols);
 }

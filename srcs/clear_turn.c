@@ -6,7 +6,7 @@
 /*   By: enennige <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 13:20:35 by enennige          #+#    #+#             */
-/*   Updated: 2018/05/18 19:45:08 by enennige         ###   ########.fr       */
+/*   Updated: 2018/05/19 12:38:39 by enennige         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	free_chararr(char **arr)
 		while (arr[i] != NULL)
 		{
 			ft_strdel(&arr[i]);
-			i++;	
+			i++;
 		}
 	}
 }
@@ -30,7 +30,7 @@ void	free_chararr(char **arr)
 void	free_intarr(int **arr, int rows)
 {
 	int r;
-	
+
 	r = 0;
 	if (arr)
 	{
@@ -45,14 +45,14 @@ void	free_intarr(int **arr, int rows)
 
 void	clear_turn(t_game game, t_turn *turn)
 {
-	//free_chararr(turn->board_map);
-	//turn->board_map = NULL;
-	//free_intarr(turn->heatmap_enemy, game.rows);
-	//turn->heatmap_enemy = NULL;
-	//free_intarr(turn->heatmap_self, game.rows);
-	//turn->heatmap_self = NULL;
+	free_chararr(turn->board_map);
+	turn->board_map = NULL;
+	free_intarr(turn->heatmap_enemy, game.rows);
+	turn->heatmap_enemy = NULL;
+	free_intarr(turn->heatmap_self, game.rows);
+	turn->heatmap_self = NULL;
 	free_intarr(turn->heatmap, game.rows);
 	turn->heatmap = NULL;
-	//free_chararr(turn->piece_map);
-	//turn->piece_map = NULL;
+	free_chararr(turn->piece_map);
+	turn->piece_map = NULL;
 }

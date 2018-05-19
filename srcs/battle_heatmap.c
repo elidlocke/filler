@@ -6,63 +6,71 @@
 /*   By: enennige <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/18 19:25:12 by enennige          #+#    #+#             */
-/*   Updated: 2018/05/18 20:47:45 by enennige         ###   ########.fr       */
+/*   Updated: 2018/05/19 15:24:10 by enennige         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "heatmap.h"
 
 void	set_number(int **board, t_game game,
-							int start_row, int start_col, int fill_num)
+							int *coor, int fill)
 {
-	if (is_on_board(game, start_row + 1, start_col) && board[start_row + 1][start_col] == 0)
-		board[start_row + 1][start_col] = fill_num;
-	if (is_on_board(game, start_row, start_col + 1) && board[start_row][start_col + 1] == 0)
-		board[start_row][start_col + 1]  = fill_num;
-	if (is_on_board(game, start_row - 1, start_col) && board[start_row - 1][start_col] == 0)
-		board[start_row - 1][start_col] = fill_num;
-	if (is_on_board(game, start_row, start_col - 1) && board[start_row][start_col - 1] == 0)
-		board[start_row][start_col - 1] = fill_num;
-	if (is_on_board(game, start_row + 1, start_col + 1) && board[start_row + 1][start_col + 1] == 0)
-		board[start_row + 1][start_col + 1] = fill_num;
-	if (is_on_board(game, start_row - 1, start_col - 1) && board[start_row - 1][start_col - 1] == 0)
-		board[start_row - 1][start_col - 1] = fill_num;
-	if (is_on_board(game, start_row + 1, start_col - 1) && board[start_row + 1][start_col - 1] == 0)
-		board[start_row + 1][start_col - 1] = fill_num;
-	if (is_on_board(game, start_row - 1, start_col + 1) && board[start_row - 1][start_col + 1] == 0)
-		board[start_row - 1][start_col + 1] = fill_num;
+	int r;
+	int c;
+
+	r = coor[0];
+	c = coor[1];
+	if (is_on_board(game, r + 1, c) && board[r + 1][c] == 0)
+		board[r + 1][c] = fill;
+	if (is_on_board(game, r, c + 1) && board[r][c + 1] == 0)
+		board[r][c + 1] = fill;
+	if (is_on_board(game, r - 1, c) && board[r - 1][c] == 0)
+		board[r - 1][c] = fill;
+	if (is_on_board(game, r, c - 1) && board[r][c - 1] == 0)
+		board[r][c - 1] = fill;
+	if (is_on_board(game, r + 1, c + 1) && board[r + 1][c + 1] == 0)
+		board[r + 1][c + 1] = fill;
+	if (is_on_board(game, r - 1, c - 1) && board[r - 1][c - 1] == 0)
+		board[r - 1][c - 1] = fill;
+	if (is_on_board(game, r + 1, c - 1) && board[r + 1][c - 1] == 0)
+		board[r + 1][c - 1] = fill;
+	if (is_on_board(game, r - 1, c + 1) && board[r - 1][c + 1] == 0)
+		board[r - 1][c + 1] = fill;
+}
+
+int		get_fill(int direction, int rows, int cols)
+{
+	if (direction == -1)
+		return (get_bigger_num(rows, cols) - 1);
+	else
+		return (1);
 }
 
 void	fill_map(t_game game, int **map, int direction, int obj_value)
 {
-	int r;
-	int c;
-	int	fill_num;
+	int coor[2];
+	int	fill;
 	int max_num;
 
-	//max_num = get_bigger_num(game.rows, game.cols) + 1;
 	max_num = game.rows * game.cols + 1;
-	if (direction == -1)
-		fill_num = max_num - 1;
-	else
-		fill_num = 1;
-	while (fill_num != 0 && fill_num != max_num)
+	fill = get_fill(direction, game.rows, game.cols);
+	while (fill != 0 && fill != max_num)
 	{
-		r = 0;
-		while (r < game.rows)
+		coor[0] = 0;
+		while (coor[0] < game.rows)
 		{
-			c = 0;
-			while (c < game.cols)
+			coor[1] = 0;
+			while (coor[1] < game.cols)
 			{
-				if (map[r][c] == obj_value)
-					set_number(map, game, r, c, fill_num);
-				else if (map[r][c] == fill_num)
-					set_number(map, game, r, c, fill_num + direction);
-				c++;
+				if (map[coor[0]][coor[1]] == obj_value)
+					set_number(map, game, coor, fill);
+				else if (map[coor[0]][coor[1]] == fill)
+					set_number(map, game, coor, fill + direction);
+				coor[1]++;
 			}
-			r++;
+			coor[0]++;
 		}
-		fill_num += direction;
+		fill += direction;
 	}
 }
 
@@ -71,7 +79,7 @@ void	combine_heatmaps(t_game game, t_turn *turn)
 	int r;
 	int c;
 
-	if (!(turn->heatmap= (int **)malloc(sizeof(int *) * game.rows)))
+	if (!(turn->heatmap = (int **)malloc(sizeof(int *) * game.rows)))
 		return ;
 	r = 0;
 	while (r < game.rows)
@@ -82,9 +90,7 @@ void	combine_heatmaps(t_game game, t_turn *turn)
 		while (c < game.cols)
 		{
 			if (turn->heatmap_self[r][c] < 0)
-			{
 				turn->heatmap[r][c] = turn->heatmap_self[r][c];
-			}
 			else
 			{
 				turn->heatmap[r][c] = turn->heatmap_self[r][c]
@@ -100,7 +106,5 @@ void	make_battle_heatmap(t_game game, t_turn *turn)
 {
 	fill_map(game, turn->heatmap_self, -1, PLAYER_NUM);
 	fill_map(game, turn->heatmap_enemy, 1, ENEMY_NUM);
-	
 	combine_heatmaps(game, turn);
 }
-

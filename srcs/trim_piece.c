@@ -6,7 +6,7 @@
 /*   By: enennige <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/18 09:53:12 by enennige          #+#    #+#             */
-/*   Updated: 2018/05/18 12:17:26 by enennige         ###   ########.fr       */
+/*   Updated: 2018/05/19 12:32:27 by enennige         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	set_offset(t_turn *turn)
 
 	pr = 0;
 	turn->piece_row_offset = turn->piece_rows;
-	turn->piece_col_offset  = turn->piece_cols;
+	turn->piece_col_offset = turn->piece_cols;
 	while (pr < turn->piece_rows)
 	{
 		pc = 0;
@@ -49,7 +49,11 @@ void	set_trimmed_piece(t_turn *turn)
 	r = 0;
 	while (r < turn->piece_rows - turn->piece_row_offset)
 	{
-		turn->piece_trimmed_map[r] = ft_strsub(turn->piece_map[r + turn->piece_row_offset], turn->piece_col_offset, turn->piece_cols - turn->piece_col_offset);
+		turn->piece_trimmed_map[r] =
+			ft_strsub(
+					turn->piece_map[r + turn->piece_row_offset],
+					turn->piece_col_offset, turn->piece_cols
+					- turn->piece_col_offset);
 		r++;
 	}
 	turn->piece_trimmed_map[r] = NULL;
