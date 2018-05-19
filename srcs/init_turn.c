@@ -6,7 +6,7 @@
 /*   By: enennige <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 20:08:03 by enennige          #+#    #+#             */
-/*   Updated: 2018/05/17 14:43:18 by enennige         ###   ########.fr       */
+/*   Updated: 2018/05/18 19:23:18 by enennige         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,15 @@ void    set_piece(t_turn *turn)
 
 void	init_turn(t_game game, t_turn *turn)
 {
-	turn->place_col = ERROR;
-	turn->place_row = ERROR;
+	turn->board_map = NULL;
+	turn->heatmap_enemy = NULL;
+	turn->heatmap_self = NULL;
+	turn->heatmap = NULL;
 	turn->piece_rows = -1;
 	turn->piece_cols = -1;
+	turn->piece_map = NULL;
+	turn->place_col = ERROR;
+	turn->place_row = ERROR;
 	set_map(game, turn);
 	set_piece_dims(turn);
 	set_piece(turn);

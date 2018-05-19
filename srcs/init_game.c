@@ -6,7 +6,7 @@
 /*   By: enennige <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 20:06:55 by enennige          #+#    #+#             */
-/*   Updated: 2018/05/18 17:03:13 by enennige         ###   ########.fr       */
+/*   Updated: 2018/05/18 19:20:20 by enennige         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,10 @@ void    set_board_dims(t_game *game)
 void    init_game(t_game *game)
 {
 	game->turns_taken = 0;
-    set_player(game);
+	game->start_row = ERROR;
+    game->start_col = ERROR;
+	game->furthest_corner_row = ERROR;
+    game->furthest_corner_col = ERROR;
+	set_player(game);
     set_board_dims(game);
 }

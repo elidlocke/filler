@@ -6,7 +6,7 @@
 #    By: enennige <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/12 11:24:58 by enennige          #+#    #+#              #
-#    Updated: 2018/05/17 13:36:38 by enennige         ###   ########.fr        #
+#    Updated: 2018/05/18 19:26:17 by enennige         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ CC = gcc
 NAME = enennige.filler
 CFLAGS = -Wall -Wextra -Werror
 SRC_PATH = srcs/
-SRC_NAME = main.c init_game.c init_turn.c create_num_heatmaps.c place_piece.c
+SRC_NAME = main.c init_game.c init_turn.c init_heatmaps.c
+SRC_NAME += corner_heatmap.c battle_heatmap.c place_piece.c
 SRC_NAME += clear_turn.c utils.c
 SRCS = $(addprefix $(SRC_PATH), $(SRC_NAME))
 OBJS = $(patsubst %.c, %.o, $(SRC_NAME))
