@@ -6,7 +6,7 @@
 /*   By: enennige <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 12:05:37 by enennige          #+#    #+#             */
-/*   Updated: 2018/05/17 14:34:38 by enennige         ###   ########.fr       */
+/*   Updated: 2018/05/18 17:03:32 by enennige         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct		s_game
 	int				rows;
 	int				cols;
 	unsigned char	player_char;
+	int				turns_taken;
 }					t_game;
 
 typedef struct		s_turn

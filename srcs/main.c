@@ -6,7 +6,7 @@
 /*   By: enennige <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 10:28:19 by enennige          #+#    #+#             */
-/*   Updated: 2018/05/17 16:26:57 by enennige         ###   ########.fr       */
+/*   Updated: 2018/05/18 17:05:41 by enennige         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ int main(void)
 		else
 		{
 			print_move(turn.place_row, turn.place_col);
+			game.turns_taken += 1;
+			fprintf(stderr, "\e[1;34mTurns Taken[%d]\n\e[0m", game.turns_taken);
 		}
 	}
 	return (0);

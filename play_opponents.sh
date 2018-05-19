@@ -6,7 +6,7 @@
 #    By: enennige <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/17 15:21:27 by enennige          #+#    #+#              #
-#    Updated: 2018/05/17 17:57:47 by enennige         ###   ########.fr        #
+#    Updated: 2018/05/18 15:39:29 by enennige         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ compete() {
 
 	me=$(cat 'competition_results.txt' | grep -n '==' | sed -n "$3p" | awk '{print $4}')
 	enemy=$(cat 'competition_results.txt' | grep -n '==' | sed -n "$2p" | awk '{print $4}')
-	score=$(($me - $enemy))
+	score=$(expr $me - $enemy)
 	if [ $score \> 0 ];then
 		printf "$green" "win: "
 	else
