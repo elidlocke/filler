@@ -6,7 +6,7 @@
 #    By: enennige <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/17 15:21:27 by enennige          #+#    #+#              #
-#    Updated: 2018/05/20 09:50:50 by enennige         ###   ########.fr        #
+#    Updated: 2018/05/20 10:01:37 by enennige         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,13 +17,10 @@ green='\e[1;32m%s\e[0m'
 blue='\e[1;34m%s\e[0m'
 
 compete() {
-	./resources/filler_vm -p$2 resources/players/$1.filler -p$3 resources/\
-	players/enennige.filler -v -f resources/maps/$4 -q > competition_results.txt
+	./resources/filler_vm -p$2 resources/players/$1.filler -p$3 resources/players/enennige.filler -v -f resources/maps/$4 -q > competition_results.txt
 
-	me=$(cat 'competition_results.txt' | grep -n '==' |\
-	   	sed -n "$3p" | awk '{print $4}')
-	enemy=$(cat 'competition_results.txt' | grep -n '==' |\
-	   	sed -n "$2p" | awk '{print $4}')
+	me=$(cat 'competition_results.txt' | grep -n '==' | sed -n "$3p" | awk '{print $4}')
+	enemy=$(cat 'competition_results.txt' | grep -n '==' | sed -n "$2p" | awk '{print $4}')
 	score=$(expr $me - $enemy)
 	if [ $score \> 0 ];then
 		printf "$green" "win: "
@@ -50,7 +47,7 @@ loop_all_players_all_maps(){
 		for j in "abanlin" "champely" "hcao" "carli" "grati" "superjeannot"
 		do
 			:
-			run_trials $j map00
+			run_trials $j $i
 		done
 	done
 }
