@@ -6,7 +6,7 @@
 #    By: enennige <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/20 11:20:31 by enennige          #+#    #+#              #
-#    Updated: 2018/05/21 11:36:24 by enennige         ###   ########.fr        #
+#    Updated: 2018/05/21 15:57:34 by enennige         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,16 +40,22 @@ def read_game():
         elif line[0] == '.' or line[0] == '*':
             piece.append_grid_line(line)
         elif "got" in line:
-            game.increment_score(line)
-            turn = Turn(board, piece, game.po_totalscore, game.px_totalscore)
-            game.turns.append(turn)
-            board = Grid()
-            piece = Grid()
+            if board.data != None:
+                game.increment_score(line)
+                turn = Turn(board, piece,
+                            game.po_totalscore, game.px_totalscore)
+                turn.set_current_player(line)
+                game.turns.append(turn)
+                board = Grid()
+                piece = Grid()
+            else:
+                piece = Grid()
         elif "error" in line:
-            turn = Turn(board, piece, game.po_totalscore,
-                        game.px_totalscore, False)
-            game.turns.append(turn)
-            piece = Grid()
+            if board.data != None:
+                turn = Turn(board, piece, game.po_totalscore,
+                            game.px_totalscore, False)
+                game.turns.append(turn)
+                piece = Grid()
 
     game.set_last_turn_score()
     return (game)

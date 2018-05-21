@@ -6,7 +6,7 @@
 #    By: enennige <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/20 10:16:43 by enennige          #+#    #+#              #
-#    Updated: 2018/05/21 13:13:04 by enennige         ###   ########.fr        #
+#    Updated: 2018/05/21 15:46:23 by enennige         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,11 +27,9 @@ game = read_game()
 
 class filler_viz(Frame):
 
-    turn = 0
-
-    def __init__(self, turn=0):
+    def __init__(self, turncount=0):
         super().__init__()   
-        self.turn = turn
+        self.turncount = turncount
         self.initUI()
     
     def initUI(self):
@@ -45,21 +43,21 @@ class filler_viz(Frame):
         canvas.bind("<Right>", lambda event,
                     arg=canvas: self.next_turn(event, arg))
         canvas.pack(fill=BOTH, expand=1)
-        current_turn = game.turns[self.turn]
-        draw_turn(canvas, game.turns[self.turn])
+        current_turn = game.turns[self.turncount]
+        draw_turn(canvas, game.turns[self.turncount])
 
     def prev_turn(self, event, canvas):
         print ("PREV")
-        if self.turn > 0:
-            self.turn -=1
-        current_turn = game.turns[self.turn]
-        draw_turn(canvas, game.turns[self.turn])
+        if self.turncount > 0:
+            self.turncount -=1
+        current_turn = game.turns[self.turncount]
+        draw_turn(canvas, game.turns[self.turncount])
 
     def next_turn(self, event, canvas):
         print ("NEXT")
-        if (self.turn < len(game.turns)):
-            self.turn += 1
-        draw_turn(canvas, game.turns[self.turn])
+        if (self.turncount < len(game.turns)):
+            self.turncount += 1
+        draw_turn(canvas, game.turns[self.turncount])
 
 def draw_turn(canvas, turn):
     x_origin = 30
@@ -67,11 +65,12 @@ def draw_turn(canvas, turn):
     size = 15
     border = 5
     offset = size + border
-    draw_grid(canvas, turn.board, x_origin, y_origin, size, offset)
+    canvas.delete("all")
+    draw_grid(canvas, turn, turn.board, x_origin, y_origin, size, offset)
     px_origin = (x_origin * 2) + (turn.board.cols * offset)
-    draw_grid(canvas, turn.piece, px_origin, y_origin, size, offset)
+    draw_grid(canvas, turn, turn.piece, px_origin, y_origin, size, offset)
 
-def draw_grid(canvas, grid, x_origin, y_origin, size, offset):
+def draw_grid(canvas, turn, grid, x_origin, y_origin, size, offset):
     xl = x_origin
     yt = y_origin
     xr = xl + size
@@ -80,7 +79,7 @@ def draw_grid(canvas, grid, x_origin, y_origin, size, offset):
 
     for row in grid.data:
         for col in row:
-            color = get_cell_color(col)
+            color = get_cell_color(col, turn.current_player)
             canvas.create_rectangle(xl, yt, xr, yb,
                                     outline=color,
                                     fill=color)
@@ -91,7 +90,7 @@ def draw_grid(canvas, grid, x_origin, y_origin, size, offset):
         yt += offset
         yb += offset
 
-def get_cell_color(cell):
+def get_cell_color(cell, current_player):
     if cell == 'x':
         return (x_highlight)
     elif cell == 'X':
@@ -100,8 +99,10 @@ def get_cell_color(cell):
         return (o_highlight)
     elif cell == 'O':
         return (o_color)
-    elif cell == '*':
-        return(o_highlight)
+    elif cell == '*' and current_player == 'X':
+       return(o_highlight)
+    elif cell == '*' and current_player == 'O':
+        return(x_highlight)
     return (default_color)
 
 
