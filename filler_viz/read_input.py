@@ -6,7 +6,7 @@
 #    By: enennige <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/20 11:20:31 by enennige          #+#    #+#              #
-#    Updated: 2018/05/20 13:02:09 by enennige         ###   ########.fr        #
+#    Updated: 2018/05/20 18:30:46 by enennige         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,76 +14,62 @@ import fileinput
 import sys
 from termcolor import colored, cprint
 import re
+from game import Game
+from grid import Grid
+from turn import Turn
 
-#init board object
-class Board:
-
-    def __init__(self):
-        self.rows = None
-        self.cols = None
-        self.data = []
-
-
-#init piece object
-class Piece:
-
-    def __init__(self):
-        self.rows = None
-        self.cols = None
-        self.data = []
-
-
-#init piece object
-class Game:
-
-    def __init__(self, board, piece):
-        self.board = board
-        self.piece = piece
-
-def get_dims(line, game_object):
-    line = line.replace(':', ' ')
-    words = line.split(' ')
-    #print ("row: " + words[1] + " col: " + words[2])
-    game_object.rows = int(words[1])
-    game_object.cols = int(words[2])
-
-def append_board_line(line, board):
-    board.data.append(line.split(' ')[1].rstrip())
-
-def set_game_info():
-    board = Board()
-    piece = Piece()
-    for line in fileinput.input():
+def read_game():
+    game = Game()
+    game.turns = []
+    board = Grid()
+    piece = Grid()
+    stdin = fileinput.input()
+    for line in stdin:
         #cprint (line, 'green')
+        if "p1" in line:
+            game.set_player_name(line, 1)
+        elif "p2" in line:
+            game.set_player_name(line, 2)
+        #start of board
         if "Plateau" in line:
-            get_dims(line, board)
+            board.get_dims(line)
         elif line[0].isdigit():
-            append_board_line(line, board)
+            board.append_grid_line(line)
         elif "Piece" in line:
-            get_dims(line, piece)
+            piece.get_dims(line)
         elif line[0] == '.' or line[0] == '*':
-            piece.data.append(line.rstrip())
-    cprint (board.rows, 'red')
-    cprint (board.cols, 'red')
-    cprint (board.data, 'green')
-    cprint (piece.rows, 'red')
-    cprint (piece.cols, 'red')
-    cprint (piece.data, 'green')
+            piece.append_grid_line(line)
+        elif "got" in line:
+            game.increment_score(line)
+            turn = Turn(board, piece, game.po_totalscore, game.px_totalscore)
+            game.turns.append(turn)
+            board = Grid()
+            piece = Grid()
+        elif "error" in line:
+            turn = Turn(board, piece, game.po_totalscore, game.px_totalscore, False)
+            game.turns.append(turn)
+            piece = Grid()
 
-#get board rows
-#get board cols
-#get board data
+    game.set_last_turn_score()
+    return (game)
 
-#get board rows
-#get board cols
-#get board data
-
-#init game object
-#put in board
-#put in piece
-
-#make an array of game states
-#pass to viz to move forward and back through
+def print_game(game):
+    cprint ("PLAYER 1: " + game.po, "green")
+    if game.num_players == 2: 
+        cprint ("PLAYER 2: " + game.px, "green")
+    for turn in game.turns:
+        cprint ("GAME rows: " + str(turn.board.rows) + \
+                " cols: " + str(turn.board.cols), "red")
+        for line in turn.board.data:
+            cprint (line, "red")
+        cprint ("PIECE rows: " + str(turn.piece.rows) + \
+                " cols: " + str(turn.piece.cols), "blue")
+        for line in turn.piece.data:
+            cprint (line, "blue")
+        cprint ("O Score: " + str(turn.po_score), "green")
+        if game.num_players == 2:
+            cprint ("X Score: " + str(turn.px_score), "green")
 
 if __name__ == "__main__":
-    set_game_info()
+    game = read_game()
+    print_game(game)
