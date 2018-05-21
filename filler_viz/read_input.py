@@ -6,7 +6,7 @@
 #    By: enennige <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/20 11:20:31 by enennige          #+#    #+#              #
-#    Updated: 2018/05/20 18:30:46 by enennige         ###   ########.fr        #
+#    Updated: 2018/05/21 11:36:24 by enennige         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,8 @@ def read_game():
             board = Grid()
             piece = Grid()
         elif "error" in line:
-            turn = Turn(board, piece, game.po_totalscore, game.px_totalscore, False)
+            turn = Turn(board, piece, game.po_totalscore,
+                        game.px_totalscore, False)
             game.turns.append(turn)
             piece = Grid()
 

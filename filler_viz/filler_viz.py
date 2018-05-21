@@ -6,72 +6,104 @@
 #    By: enennige <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/20 10:16:43 by enennige          #+#    #+#              #
-#    Updated: 2018/05/20 11:13:50 by enennige         ###   ########.fr        #
+#    Updated: 2018/05/21 13:13:04 by enennige         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 from tkinter import Tk, Canvas, Frame, BOTH
+from game import Game
+from grid import Grid
+from turn import Turn
+from read_input import read_game
+import time
 
-self_color = '#3AC43A'
-enemy_color = '#3A3AC4'
+x_color = '#3AC43A'
+x_highlight = '#D8D826'
+o_color = '#3A3AC4'
+o_highlight = '#26D8D8'
 background_color = "#1C1C1C"
 default_color = '#232323'
+game = read_game()
 
 class filler_viz(Frame):
-  
-    def __init__(self):
+
+    turn = 0
+
+    def __init__(self, turn=0):
         super().__init__()   
+        self.turn = turn
         self.initUI()
-        
+    
     def initUI(self):
       
-        self.master.title("Colours")        
+        self.master.title("Filler Viz")        
         self.pack(fill=BOTH, expand=1)
         canvas = Canvas(self, bg=background_color)
-        draw_board(canvas, 16, 16);
-        '''
-        canvas.create_rectangle(30, 10, 120, 80, 
-            outline="#fb0", fill="#fb0")
-        canvas.create_rectangle(150, 10, 240, 80, 
-            outline="#f50", fill="#f50")
-        canvas.create_rectangle(270, 10, 370, 80, 
-            outline="#05f", fill="#05f")            
-        '''
+        canvas.focus_set()
+        canvas.bind("<Left>", lambda event,
+                    arg=canvas: self.prev_turn(event, arg))
+        canvas.bind("<Right>", lambda event,
+                    arg=canvas: self.next_turn(event, arg))
         canvas.pack(fill=BOTH, expand=1)
+        current_turn = game.turns[self.turn]
+        draw_turn(canvas, game.turns[self.turn])
 
+    def prev_turn(self, event, canvas):
+        print ("PREV")
+        if self.turn > 0:
+            self.turn -=1
+        current_turn = game.turns[self.turn]
+        draw_turn(canvas, game.turns[self.turn])
 
-#read input from the terminal
+    def next_turn(self, event, canvas):
+        print ("NEXT")
+        if (self.turn < len(game.turns)):
+            self.turn += 1
+        draw_turn(canvas, game.turns[self.turn])
 
-
-
-#get board dimensions and draw board
-
-def draw_board(canvas, width, height):
-    
+def draw_turn(canvas, turn):
     x_origin = 30
-    x_start = 30
-    y_start = 30
+    y_origin = 30
     size = 15
-    x_end = x_start + size
-    y_end = y_start + size
-    offset = size + 5
- 
-    row = 0
-    while (row < width):
-        col = 0
-        while (col < width):
-            canvas.create_rectangle(x_start, y_start, x_end, y_end, outline=default_color, fill=default_color)
-            x_start += offset
-            x_end += offset
-            col += 1
-        x_start = x_origin
-        x_end = x_origin + size
-        y_start += offset
-        y_end += offset
-        row += 1
+    border = 5
+    offset = size + border
+    draw_grid(canvas, turn.board, x_origin, y_origin, size, offset)
+    px_origin = (x_origin * 2) + (turn.board.cols * offset)
+    draw_grid(canvas, turn.piece, px_origin, y_origin, size, offset)
 
-#get piece dimensions and draw piece
-#get score and draw score
+def draw_grid(canvas, grid, x_origin, y_origin, size, offset):
+    xl = x_origin
+    yt = y_origin
+    xr = xl + size
+    yb = yt + size
+    offset = size + 5
+
+    for row in grid.data:
+        for col in row:
+            color = get_cell_color(col)
+            canvas.create_rectangle(xl, yt, xr, yb,
+                                    outline=color,
+                                    fill=color)
+            xl += offset
+            xr += offset
+        xl = x_origin
+        xr = x_origin + size
+        yt += offset
+        yb += offset
+
+def get_cell_color(cell):
+    if cell == 'x':
+        return (x_highlight)
+    elif cell == 'X':
+        return (x_color)
+    elif cell == 'o':
+        return (o_highlight)
+    elif cell == 'O':
+        return (o_color)
+    elif cell == '*':
+        return(o_highlight)
+    return (default_color)
+
 
 def main():
   
