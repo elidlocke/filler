@@ -6,7 +6,7 @@
 #    By: enennige <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/20 11:20:31 by enennige          #+#    #+#              #
-#    Updated: 2018/05/21 21:14:00 by enennige         ###   ########.fr        #
+#    Updated: 2018/05/22 09:51:13 by enennige         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ def read_game():
                 game.increment_score(line)
                 turn = Turn(board, piece,
                             game.po_totalscore, game.px_totalscore)
-                turn.set_current_player(line)
+                turn.set_current_player(line) #initialize this in line above
                 game.turns.append(turn)
                 board = Grid()
                 piece = Grid()
