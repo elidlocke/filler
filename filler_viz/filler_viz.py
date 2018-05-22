@@ -6,11 +6,11 @@
 #    By: enennige <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/20 10:16:43 by enennige          #+#    #+#              #
-#    Updated: 2018/05/21 18:05:08 by enennige         ###   ########.fr        #
+#    Updated: 2018/05/21 21:25:25 by enennige         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-from tkinter import Tk, Canvas, Frame, BOTH
+from tkinter import Tk, Canvas, Frame, BOTH, PhotoImage
 from game import Game
 from grid import Grid
 from turn import Turn
@@ -22,6 +22,7 @@ x_highlight = '#D8D826'
 o_color = '#3A3AC4'
 o_highlight = '#26D8D8'
 background_color = "#1C1C1C"
+title_color = "#C0C0C0"
 default_color = '#232323'
 game = read_game()
 
@@ -58,14 +59,32 @@ class filler_viz(Frame):
         draw_turn(canvas, game.turns[self.turncount])
 
 def write_text(canvas, turn, x_origin, y_origin, offset):
-    canvas.create_text(x_origin, y_origin - 50, fill="white", anchor="nw",
-                       font=("Courier", 20),
-                        text="Filler")
+    canvas.create_text(x_origin, y_origin - 50, fill=title_color, anchor="nw",
+                       font=("Courier", 20), text="Filler")
     textx_origin = (x_origin) + (turn.board.cols * offset)
-    canvas.create_text(textx_origin - 100, 50, fill=o_color, anchor="ne", font=("Courier", 15),
-                        text=game.po)
-    canvas.create_text(textx_origin, 50, fill=x_color, anchor="ne", font=("Courier", 15),
-                        text=game.px)
+    canvas.create_text(textx_origin - 100, y_origin - 25, fill=o_color,
+                       anchor="ne", font=("Courier", 15), text=game.po)
+    canvas.create_text(textx_origin, y_origin - 25, fill=x_color, anchor="ne",
+                       font=("Courier", 15), text=game.px)
+    if turn.po_score == game.po_totalscore and \
+       game.po_totalscore > game.px_totalscore:
+        canvas.create_text(textx_origin - 100, y_origin - 50, fill=o_color,
+                           anchor="ne", font=("Courier", 20),
+                           text="WIN:" + str(turn.po_score))
+    else:
+        canvas.create_text(textx_origin - 100, y_origin - 50, fill=o_color,
+                           anchor="ne", font=("Courier", 20), text=turn.po_score)
+
+    if turn.px_score == game.px_totalscore and \
+       game.px_totalscore > game.po_totalscore:
+        canvas.create_text(textx_origin, y_origin - 50, fill=x_color,
+                           anchor="ne", font=("Courier", 20),
+                           text="WIN:" + str(turn.px_score))
+    else:
+        canvas.create_text(textx_origin, y_origin - 50, fill=x_color,
+                           anchor="ne", font=("Courier", 20),
+                           text=turn.px_score)
+
 def draw_turn(canvas, turn):
     x_origin = 30
     y_origin = 80
@@ -118,7 +137,9 @@ def main():
   
     root = Tk()
     viz = filler_viz()
-    root.geometry("1000x1000+300+300")
+    x_tk = game.turns[0].board.cols * 20 + (300)
+    y_tk = game.turns[0].board.rows * 20 + (130)
+    root.geometry("{0}x{1}+300+300".format(x_tk, y_tk))
     root.mainloop()  
 
 

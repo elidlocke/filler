@@ -6,7 +6,7 @@
 #    By: enennige <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/20 11:20:31 by enennige          #+#    #+#              #
-#    Updated: 2018/05/21 15:57:34 by enennige         ###   ########.fr        #
+#    Updated: 2018/05/21 21:14:00 by enennige         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,8 +56,6 @@ def read_game():
                             game.px_totalscore, False)
                 game.turns.append(turn)
                 piece = Grid()
-
-    game.set_last_turn_score()
     return (game)
 
 def print_game(game):

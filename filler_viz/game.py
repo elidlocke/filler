@@ -6,7 +6,7 @@
 #    By: enennige <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/20 16:17:34 by enennige          #+#    #+#              #
-#    Updated: 2018/05/21 15:25:05 by enennige         ###   ########.fr        #
+#    Updated: 2018/05/21 21:16:31 by enennige         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,14 +36,3 @@ class Game:
             self.po_totalscore += 1
         elif "X" in line:
             self.px_totalscore += 1
-
-    def set_last_turn_score(self):
-        if (len(self.turns) > 1):
-            last_turn = self.turns[-1]
-            second_last_turn = self.turns[-2]
-
-            if last_turn.is_valid:
-                if second_last_turn.po_score == last_turn.po_score:
-                    last_turn.px_score -= 1
-                else:
-                    last_turn.po_score -= 1
