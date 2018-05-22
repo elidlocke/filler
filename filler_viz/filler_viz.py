@@ -6,7 +6,7 @@
 #    By: enennige <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/20 10:16:43 by enennige          #+#    #+#              #
-#    Updated: 2018/05/21 21:25:25 by enennige         ###   ########.fr        #
+#    Updated: 2018/05/22 09:40:51 by enennige         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,9 @@ from read_input import read_game
 import time
 
 x_color = '#3AC43A'
-x_highlight = '#D8D826'
+x_highlight = '#9DE29D'
 o_color = '#3A3AC4'
-o_highlight = '#26D8D8'
+o_highlight = '#9D9DE2'
 background_color = "#1C1C1C"
 title_color = "#C0C0C0"
 default_color = '#232323'
@@ -91,7 +91,7 @@ def draw_turn(canvas, turn):
     size = 15
     border = 5
     offset = size + border
-    canvas.delete("all") #want to have some things that we keep ?
+    canvas.delete("all")
     write_text(canvas, turn, x_origin, y_origin, offset)
     draw_grid(canvas, turn, turn.board, x_origin, y_origin, size, offset)
     px_origin = (x_origin * 2) + (turn.board.cols * offset)
@@ -134,12 +134,16 @@ def get_cell_color(cell, current_player):
 
 
 def main():
-  
+ 
+    print("LOADING ...\n")
     root = Tk()
     viz = filler_viz()
     x_tk = game.turns[0].board.cols * 20 + (300)
     y_tk = game.turns[0].board.rows * 20 + (130)
     root.geometry("{0}x{1}+300+300".format(x_tk, y_tk))
+    print ("Navigation:\n
+            <-left arrow key: last move\n
+            ->right arrow key: next move\n")
     root.mainloop()  
 
 
