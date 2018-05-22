@@ -6,7 +6,7 @@
 #    By: enennige <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/12 11:24:58 by enennige          #+#    #+#              #
-#    Updated: 2018/05/18 19:26:17 by enennige         ###   ########.fr        #
+#    Updated: 2018/05/22 11:28:33 by enennige         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ clean:
 fclean: clean
 	make fclean -C $(LIB_NAME)/
 	rm -f $(NAME)
+	rm -f filler.trace
 
 re: fclean all
 
