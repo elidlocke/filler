@@ -6,7 +6,7 @@
 #    By: enennige <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/20 16:25:17 by enennige          #+#    #+#              #
-#    Updated: 2018/05/21 15:55:12 by enennige         ###   ########.fr        #
+#    Updated: 2018/05/21 17:56:45 by enennige         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,6 @@ class Turn:
 
     def set_current_player(self, line):
         if 'X' in line:
-            current_player = 'X'
+            self.current_player = 'X'
         elif 'O' in line:
-            current_player = 'O'
+            self.current_player = 'O'

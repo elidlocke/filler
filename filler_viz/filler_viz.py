@@ -6,7 +6,7 @@
 #    By: enennige <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/20 10:16:43 by enennige          #+#    #+#              #
-#    Updated: 2018/05/21 15:46:23 by enennige         ###   ########.fr        #
+#    Updated: 2018/05/21 18:05:08 by enennige         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,34 +38,42 @@ class filler_viz(Frame):
         self.pack(fill=BOTH, expand=1)
         canvas = Canvas(self, bg=background_color)
         canvas.focus_set()
+        current_turn = game.turns[self.turncount]
+        draw_turn(canvas, game.turns[self.turncount])
         canvas.bind("<Left>", lambda event,
                     arg=canvas: self.prev_turn(event, arg))
         canvas.bind("<Right>", lambda event,
                     arg=canvas: self.next_turn(event, arg))
         canvas.pack(fill=BOTH, expand=1)
-        current_turn = game.turns[self.turncount]
-        draw_turn(canvas, game.turns[self.turncount])
 
     def prev_turn(self, event, canvas):
-        print ("PREV")
         if self.turncount > 0:
             self.turncount -=1
         current_turn = game.turns[self.turncount]
         draw_turn(canvas, game.turns[self.turncount])
 
     def next_turn(self, event, canvas):
-        print ("NEXT")
-        if (self.turncount < len(game.turns)):
+        if (self.turncount < len(game.turns) - 1):
             self.turncount += 1
         draw_turn(canvas, game.turns[self.turncount])
 
+def write_text(canvas, turn, x_origin, y_origin, offset):
+    canvas.create_text(x_origin, y_origin - 50, fill="white", anchor="nw",
+                       font=("Courier", 20),
+                        text="Filler")
+    textx_origin = (x_origin) + (turn.board.cols * offset)
+    canvas.create_text(textx_origin - 100, 50, fill=o_color, anchor="ne", font=("Courier", 15),
+                        text=game.po)
+    canvas.create_text(textx_origin, 50, fill=x_color, anchor="ne", font=("Courier", 15),
+                        text=game.px)
 def draw_turn(canvas, turn):
     x_origin = 30
-    y_origin = 30
+    y_origin = 80
     size = 15
     border = 5
     offset = size + border
-    canvas.delete("all")
+    canvas.delete("all") #want to have some things that we keep ?
+    write_text(canvas, turn, x_origin, y_origin, offset)
     draw_grid(canvas, turn, turn.board, x_origin, y_origin, size, offset)
     px_origin = (x_origin * 2) + (turn.board.cols * offset)
     draw_grid(canvas, turn, turn.piece, px_origin, y_origin, size, offset)
@@ -99,10 +107,10 @@ def get_cell_color(cell, current_player):
         return (o_highlight)
     elif cell == 'O':
         return (o_color)
-    elif cell == '*' and current_player == 'X':
-       return(o_highlight)
     elif cell == '*' and current_player == 'O':
-        return(x_highlight)
+       return(o_color)
+    elif cell == '*' and current_player == 'X':
+        return(x_color)
     return (default_color)
 
 
