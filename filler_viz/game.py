@@ -6,9 +6,10 @@
 #    By: enennige <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/20 16:17:34 by enennige          #+#    #+#              #
-#    Updated: 2018/05/21 21:16:31 by enennige         ###   ########.fr        #
+#    Updated: 2018/05/22 11:12:06 by enennige         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 class Game:
 
@@ -30,7 +31,7 @@ class Game:
         if player_number == 2:
             self.num_players = 2
             self.px = words[-2]
-    
+
     def increment_score(self, line):
         if "O" in line:
             self.po_totalscore += 1
