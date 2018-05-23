@@ -6,14 +6,13 @@
 #    By: enennige <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/20 10:16:43 by enennige          #+#    #+#              #
-#    Updated: 2018/05/22 11:25:28 by enennige         ###   ########.fr        #
+#    Updated: 2018/05/22 21:18:43 by enennige         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 from tkinter import Tk, Canvas, Frame, BOTH, PhotoImage
 from game import Game
 from grid import Grid
-from turn import Turn
 from read_input import read_game
 import time
 
@@ -65,9 +64,9 @@ class filler_viz(Frame):
         offset = size + border
         self.canvas.delete("all")
         self.write_text(turn, x_origin, y_origin, offset)
-        self.draw_grid(turn, turn.board, x_origin, y_origin, size, offset)
-        px_origin = (x_origin * 2) + (turn.board.cols * offset)
-        self.draw_grid(turn, turn.piece, px_origin, y_origin, size, offset)
+        self.draw_grid(turn, turn['board'], x_origin, y_origin, size, offset)
+        px_origin = (x_origin * 2) + (turn['board'].cols * offset)
+        self.draw_grid(turn, turn['piece'], px_origin, y_origin, size, offset)
 
     def draw_grid(self, turn, grid, x_origin, y_origin, size, offset):
         xl = x_origin
@@ -78,7 +77,7 @@ class filler_viz(Frame):
 
         for row in grid.data:
             for col in row:
-                color = self.get_cell_color(col, turn.current_player)
+                color = self.get_cell_color(col, turn['current_player'])
                 self.canvas.create_rectangle(xl, yt, xr, yb,
                                              outline=color,
                                              fill=color)
@@ -105,7 +104,7 @@ class filler_viz(Frame):
         return (default_color)
 
     def write_text(self, turn, x_origin, y_origin, offset):
-        textx_origin = (x_origin) + (turn.board.cols * offset)
+        textx_origin = (x_origin) + (turn['board'].cols * offset)
         self.canvas.create_text(x_origin,
                                 y_origin - 50,
                                 fill=title_color,
@@ -124,51 +123,51 @@ class filler_viz(Frame):
                                 anchor="ne",
                                 font=("Courier", 15),
                                 text=self.game.px)
-        if turn.po_score == self.game.po_totalscore and \
-           self.game.po_totalscore > self.game.px_totalscore:
+        if turn['po_score'] == self.game.po_score and \
+           self.game.po_score > self.game.px_score:
             self.canvas.create_text(textx_origin - 100,
                                     y_origin - 50,
                                     fill=o_color,
                                     anchor="ne",
                                     font=("Courier", 20),
-                                    text="WIN:" + str(turn.po_score))
+                                    text="WIN:" + str(turn['po_score']))
         else:
             self.canvas.create_text(textx_origin - 100,
                                     y_origin - 50,
                                     fill=o_color,
                                     anchor="ne",
                                     font=("Courier", 20),
-                                    text=turn.po_score)
+                                    text=turn['po_score'])
 
-        if turn.px_score == self.game.px_totalscore and \
-           self.game.px_totalscore > self.game.po_totalscore:
+        if turn['px_score'] == self.game.px_score and \
+           self.game.px_score > self.game.po_score:
             self.canvas.create_text(textx_origin,
                                     y_origin - 50,
                                     fill=x_color,
                                     anchor="ne",
                                     font=("Courier", 20),
-                                    text="WIN:" + str(turn.px_score))
+                                    text="WIN:" + str(turn['px_score']))
         else:
             self.canvas.create_text(textx_origin,
                                     y_origin - 50,
                                     fill=x_color,
                                     anchor="ne",
                                     font=("Courier", 20),
-                                    text=turn.px_score)
+                                    text=turn['px_score'])
 
 def main():
 
     print("LOADING ...\n")
-    try:
-        root = Tk()
-        game = read_game()
-        viz = filler_viz(game)  # pass game in here and init on line above
-        x_tk = game.turns[0].board.cols * 25 + (300)
-        y_tk = game.turns[0].board.rows * 20 + (130)
-        root.geometry("{0}x{1}+300+300".format(x_tk, y_tk))
-        root.mainloop()
-    except:
-        print ("Oops, did you spell the input correctly?")
+    #try:
+    root = Tk()
+    game = read_game()
+    viz = filler_viz(game)  # pass game in here and init on line above
+    x_tk = game.turns[0]['board'].cols * 25 + (300)
+    y_tk = game.turns[0]['board'].rows * 20 + (130)
+    root.geometry("{0}x{1}+300+300".format(x_tk, y_tk))
+    root.mainloop()
+    #except:
+    #    print ("Oops, did you spell the input correctly?")
 
 if __name__ == '__main__':
     main()

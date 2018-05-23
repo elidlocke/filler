@@ -6,7 +6,7 @@
 #    By: enennige <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/20 11:20:31 by enennige          #+#    #+#              #
-#    Updated: 2018/05/22 11:16:21 by enennige         ###   ########.fr        #
+#    Updated: 2018/05/22 21:32:49 by enennige         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,66 +14,82 @@ import fileinput
 from termcolor import cprint
 from game import Game
 from grid import Grid
-from turn import Turn
 
+def get_nextline(stdin):
+    for line in stdin:
+        return (line)
+
+def get_nextline_containing(stdin, search_string):
+    for line in stdin:
+        if search_string in line:
+            return (line)
+    return None
+
+def get_ngridlines(stdin, num):
+    i = 0
+    arr = []
+    while (i < num):
+        line = get_nextline(stdin)
+        if line[0].isdigit():
+            arr.append(line.split(' ')[1].rstrip())
+        elif line[0] == '.' or line[0] == '*':
+            arr.append(line.rstrip())
+        i += 1
+    return (arr)
+
+def get_turn(game, line, stdin):
+    if "error" in line or "[0, 0]" in line:
+        game.set_dead(line)
+    elif "got" in line:
+        game.increment_score(line)
+    if "error" in line or "got" in line:
+        game.set_current_player(line)
+    line = get_nextline_containing(stdin, "Plateau")
+    if (line):
+        board = Grid(line)
+        board.set_data(get_ngridlines(stdin, board.rows))
+        piece = Grid(get_nextline_containing(stdin, "Piece"))
+        piece.set_data(get_ngridlines(stdin, piece.rows))
+        turn = dict(board=board,
+                    piece=piece,
+                    po_score=game.po_score,
+                    px_score=game.px_score,
+                    current_player=game.current_player)
+        return (turn)
 
 def read_game():
     game = Game()
-    game.turns = []
-    board = Grid()
-    piece = Grid()
     stdin = fileinput.input()
-    for line in stdin:
-        if "p1" in line:
-            game.set_player_name(line, 1)
-        elif "p2" in line:
-            game.set_player_name(line, 2)
-        if "Plateau" in line:
-            board.get_dims(line)
-        elif line[0].isdigit():
-            board.append_grid_line(line)
-        elif "Piece" in line:
-            piece.get_dims(line)
-        elif line[0] == '.' or line[0] == '*':
-            piece.append_grid_line(line)
-        elif "got" in line:
-            if board.data is not None:
-                game.increment_score(line)
-                turn = Turn(board, piece,
-                            game.po_totalscore, game.px_totalscore)
-                turn.set_current_player(line)  # initialize this in line above
-                game.turns.append(turn)
-                board = Grid()
-                piece = Grid()
-            else:
-                piece = Grid()
-        elif "error" in line:
-            if board.data is not None:
-                turn = Turn(board, piece, game.po_totalscore,
-                            game.px_totalscore, False)
-                game.turns.append(turn)
-                piece = Grid()
+    game.set_player_name(get_nextline_containing(stdin, "p1"), 1)
+    game.set_player_name(get_nextline_containing(stdin, "p2"), 2)
+    game.turns = []
+    line = "start game"
+    while (line != None):
+        turn = get_turn(game, line, stdin)
+        if turn:
+            game.turns.append(turn)
+        line = get_nextline(stdin)
     return (game)
-
 
 def print_game(game):
     cprint("PLAYER 1: " + game.po, "green")
     if game.num_players == 2:
         cprint("PLAYER 2: " + game.px, "green")
     for turn in game.turns:
-        cprint("GAME rows: " + str(turn.board.rows) +
-               " cols: " + str(turn.board.cols), "red")
-        for line in turn.board.data:
+        print("\n\n")
+        cprint("Current Player: " + str(turn['current_player']), "cyan")
+        cprint("GAME rows: " + str(turn['board'].rows) +
+               " cols: " + str(turn['board'].cols), "red")
+        for line in turn['board'].data:
             cprint(line, "red")
-        cprint("PIECE rows: " + str(turn.piece.rows) +
-               " cols: " + str(turn.piece.cols), "blue")
-        for line in turn.piece.data:
+        cprint("PIECE rows: " + str(turn['piece'].rows) +
+               " cols: " + str(turn['piece'].cols), "blue")
+        for line in turn['piece'].data:
             cprint(line, "blue")
-        cprint("O Score: " + str(turn.po_score), "green")
+        cprint("O Score: " + str(turn['po_score']), "green")
         if game.num_players == 2:
-            cprint("X Score: " + str(turn.px_score), "green")
-
+            cprint("X Score: " + str(turn['px_score']), "green")
 
 if __name__ == "__main__":
     game = read_game()
-    print_game(game)
+    #print_game(game)

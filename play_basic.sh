@@ -1,28 +1,19 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    grid.py                                            :+:      :+:    :+:    #
+#    play_visual.sh                                     :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: enennige <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2018/05/20 16:30:45 by enennige          #+#    #+#              #
-#    Updated: 2018/05/22 17:53:44 by enennige         ###   ########.fr        #
+#    Created: 2018/05/21 17:18:55 by enennige          #+#    #+#              #
+#    Updated: 2018/05/22 14:13:36 by enennige         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-class Grid:
+#!/bin/bash
+player_one=$1
+player_two=$2
+map=$3
+[ $# -eq 0 ] && { echo "Usage: $0 player_one player_two map"; exit 1; }
 
-    def __init__(self, line, rows=None, cols=None, data=None):
-        self.rows = rows
-        self.cols = cols
-        self.data = data
-        self.set_dims(line)
-    
-    def set_data(self, data):
-        self.data = data
-
-    def set_dims(self, line):
-        line = line.replace(':', ' ')
-        words = line.split(' ')
-        self.rows = int(words[1])
-        self.cols = int(words[2])
+./resources/filler_vm -p1 resources/players/$player_one.filler -p2 resources/players/$player_two.filler -v -f resources/maps/$map
