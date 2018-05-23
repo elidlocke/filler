@@ -1,10 +1,10 @@
-# Filler: Battle of the Tetris SHapes
+# Filler: Battle of the Tetris Shapes
 
 Filler is a game, similar to Blockus, where two players take turns placing tetrimino shapes on a board. In this version, a virtual machine organizes the game by giving each player a random piece at the start of each turn. The player who places the most tetrimino shapes wins.
 
 This repository contains two parts:
-- My filler player, written in C
-- A UI, written in Python
+* My filler player, written in C
+* A GUI, written in Python using Tkinter
 
 ## Game Strategy
 
@@ -16,68 +16,38 @@ my Filler player has two stages:
 
 2) Battle Stage: Balancing offence and defence, my filler places a weighting on growing away from itself and growing towards the enemy, then chooses the location with the most optimal score.
 
-[Insert Heatmap 01]
-[Insert Heatmap 02]
+[Insert Heatmap Enemy]
+[Insert Heatmap Growth]
+[Insert Heatmap Combined]
 
-## UI Usage
 
 ## Getting Started
 
-download the 
+Clone this repo and make the player using `make`. Then choose from:
 
-### Prerequisites
+Basic Mode:
+`sh play_basic.sh [player1] [player2] [map]`
 
-What things you need to install the software and how to install them
+Visual Mode:
+`sh play_visual.sh [player1] [player2] [map]`
 
-```
-Give examples
-```
+Battle All:
+`sh play_opponents.sh [player1] [player2] [map]`
 
-### Installing
+## UI Usage and Navigation
 
-A step by step series of examples that tell you have to get a development env running
+`[UI Screenshot Start] [UI Screenshot Mid] [UI Screenshot End]`
 
-Say what the step will be
+The UI can be used to analyze a game and determine effective strategies for beating other players. The UI will load the game at the starting point, and can be navigated using the keystrokes:
 
-```
-Give the example
-```
+right ->: Move forward a turn 
+left  <-: Move backwards a turn
+x		: Close the window
 
-And repeat
+## Battle Stats
 
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
+`[Battle Stats Map00] [Battle Stats Map01] [Battle Stats Map02]`
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
-## Authors
-
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone who's code was used
-* Inspiration
-* etc
-
+* [TKinter](https://wiki.python.org/moin/TkInter) - Python's built in GUI package
