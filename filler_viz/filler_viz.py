@@ -6,7 +6,7 @@
 #    By: enennige <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/20 10:16:43 by enennige          #+#    #+#              #
-#    Updated: 2018/05/22 21:18:43 by enennige         ###   ########.fr        #
+#    Updated: 2018/05/23 09:03:58 by enennige         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -158,16 +158,16 @@ class filler_viz(Frame):
 def main():
 
     print("LOADING ...\n")
-    #try:
-    root = Tk()
-    game = read_game()
-    viz = filler_viz(game)  # pass game in here and init on line above
-    x_tk = game.turns[0]['board'].cols * 25 + (300)
-    y_tk = game.turns[0]['board'].rows * 20 + (130)
-    root.geometry("{0}x{1}+300+300".format(x_tk, y_tk))
-    root.mainloop()
-    #except:
-    #    print ("Oops, did you spell the input correctly?")
+    try:
+        root = Tk()
+        game = read_game()
+        viz = filler_viz(game)
+        x_tk = game.turns[0]['board'].cols * 25 + (300)
+        y_tk = game.turns[0]['board'].rows * 20 + (130)
+        root.geometry("{0}x{1}+300+300".format(x_tk, y_tk))
+        root.mainloop()
+    except:
+        print ("Oops, did you spell the input correctly?")
 
 if __name__ == '__main__':
     main()
