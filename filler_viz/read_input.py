@@ -6,7 +6,7 @@
 #    By: enennige <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/20 11:20:31 by enennige          #+#    #+#              #
-#    Updated: 2018/05/22 21:35:15 by enennige         ###   ########.fr        #
+#    Updated: 2018/05/23 16:32:31 by enennige         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,8 @@ def get_ngridlines(stdin, num):
     arr = []
     while (i < num):
         line = get_nextline(stdin)
+        if line[0] == ' ':
+            i -= 1
         if line[0].isdigit():
             arr.append(line.split(' ')[1].rstrip())
         elif line[0] == '.' or line[0] == '*':
