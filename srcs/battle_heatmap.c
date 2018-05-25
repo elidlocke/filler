@@ -6,7 +6,7 @@
 /*   By: enennige <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/18 19:25:12 by enennige          #+#    #+#             */
-/*   Updated: 2018/05/19 15:24:10 by enennige         ###   ########.fr       */
+/*   Updated: 2018/05/24 18:33:30 by enennige         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,13 @@ void	fill_map(t_game game, int **map, int direction, int obj_value)
 {
 	int coor[2];
 	int	fill;
-	int max_num;
+	int	filled_flag;
 
-	max_num = game.rows * game.cols + 1;
+	filled_flag = 1;
 	fill = get_fill(direction, game.rows, game.cols);
-	while (fill != 0 && fill != max_num)
+	while (fill != 0 && filled_flag == 1)
 	{
+		filled_flag = 0;
 		coor[0] = 0;
 		while (coor[0] < game.rows)
 		{
@@ -65,7 +66,10 @@ void	fill_map(t_game game, int **map, int direction, int obj_value)
 				if (map[coor[0]][coor[1]] == obj_value)
 					set_number(map, game, coor, fill);
 				else if (map[coor[0]][coor[1]] == fill)
+				{
 					set_number(map, game, coor, fill + direction);
+					filled_flag = 1;
+				}
 				coor[1]++;
 			}
 			coor[0]++;
