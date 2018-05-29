@@ -30,7 +30,7 @@ Battle All:
 ## UI Usage and Navigation
 
 ![Filler Battle: Start]
-(http://github.com/elidlocke/filler/blob/master/images/map01-start-battle-filler.png)
+(https://raw.githubusercontent.com/elidlocke/filler/master/images/map01-start-battle-filler.png)
 ![Filler Battle: Middle]
 (http://github.com/elidlocke/filler/blob/master/images/map01-mid-battle-filler.png)
 ![Filler Battle: End]
