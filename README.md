@@ -29,12 +29,9 @@ Battle All:
 
 ## UI Usage and Navigation
 
-![Filler Battle: Start]
-(https://raw.githubusercontent.com/elidlocke/filler/master/images/map01-start-battle-filler.png)
-![Filler Battle: Middle]
-(http://github.com/elidlocke/filler/blob/master/images/map01-mid-battle-filler.png)
-![Filler Battle: End]
-(http://github.com/elidlocke/filler/blob/master/images/map01-end-battle-filler.png)
+![Filler Battle: Start](https://raw.githubusercontent.com/elidlocke/filler/master/images/map01-start-battle-filler.png)
+![Filler Battle: Middle](https://raw.githubusercontent.com/elidlocke/filler/master/images/map01-mid-battle-filler.png)
+![Filler Battle: End](https://raw.githubusercontent.com/elidlocke/filler/master/images/map01-end-battle-filler.png)
 
 The UI can be used to analyze a game and determine effective strategies for beating other players. The UI will load the game at the starting point, and can be navigated using the keystrokes:
 
