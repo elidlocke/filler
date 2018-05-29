@@ -30,9 +30,9 @@ Battle All:
 ## UI Usage and Navigation
 
 [https://github.com/username/repository/blob/master/img/octocat.png|alt=octocat]
-![Filler Battle: Start](http://github.com/elidlocke/filler/blob/master/filler_viz/sample_images/map01-start-battle-filler.png)
-![Filler Battle: Middle](http://github.com/elidlocke/filler/blob/master/filler_viz/sample_images/map01-mid-battle-filler.png)
-![Filler Battle: End](http://github.com/elidlocke/filler/blob/master/filler_viz/sample_images/map01-end-battle-filler.png)
+![Filler Battle: Start](http://github.com/elidlocke/filler/blob/master/images/map01-start-battle-filler.png)
+![Filler Battle: Middle](http://github.com/elidlocke/filler/blob/master/images/map01-mid-battle-filler.png)
+![Filler Battle: End](http://github.com/elidlocke/filler/blob/master/images/map01-end-battle-filler.png)
 `[UI Screenshot Start] [UI Screenshot Mid] [UI Screenshot End]`
 
 The UI can be used to analyze a game and determine effective strategies for beating other players. The UI will load the game at the starting point, and can be navigated using the keystrokes:
@@ -43,7 +43,9 @@ x		: Close the window
 
 ## Battle Stats
 
-`[Battle Stats Map00] [Battle Stats Map01] [Battle Stats Map02]`
+![Map 00](http://github.com/elidlocke/filler/blob/master/images/map00.png)
+![Map 01](http://github.com/elidlocke/filler/blob/master/images/map01.png)
+![Map 02](http://github.com/elidlocke/filler/blob/master/images/map02.png)
 
 ## Built With
 
