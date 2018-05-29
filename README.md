@@ -35,15 +35,13 @@ Battle All:
 
 The UI can be used to analyze a game and determine effective strategies for beating other players. The UI will load the game at the starting point, and can be navigated using the keystrokes:
 
-right ->: Move forward a turn 
-left  <-: Move backwards a turn
-x		: Close the window
+* right ->: Move forward a turn 
+* left  <-: Move backwards a turn
+* x		: Close the window
 
 ## Battle Stats
 
-![Map 00](http://github.com/elidlocke/filler/blob/master/images/map00.png)
-![Map 01](http://github.com/elidlocke/filler/blob/master/images/map01.png)
-![Map 02](http://github.com/elidlocke/filler/blob/master/images/map02.png)
+![Map 00](https://github.com/elidlocke/filler/blob/master/images/battle-stats-maps00.png) ![Map 01](https://github.com/elidlocke/filler/blob/master/images/battle-stats-maps01.png) ![Map 02](https://github.com/elidlocke/filler/blob/master/images/battle-stats-maps02.png)
 
 ## Built With
 
