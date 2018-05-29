@@ -41,7 +41,7 @@ The UI can be used to analyze a game and determine effective strategies for beat
 
 ## Battle Stats
 
-![Map 00](https://github.com/elidlocke/filler/blob/master/images/battle-stats-maps00.png){:width="100px"} ![Map 01](https://github.com/elidlocke/filler/blob/master/images/battle-stats-maps01.png){:width="100px"} ![Map 02](https://github.com/elidlocke/filler/blob/master/images/battle-stats-maps02.png){:width="100px"}
+![Map 00](https://github.com/elidlocke/filler/blob/master/images/battle-stats-maps00.png) ![Map 01](https://github.com/elidlocke/filler/blob/master/images/battle-stats-maps01.png) ![Map 02](https://github.com/elidlocke/filler/blob/master/images/battle-stats-maps02.png)
 
 ## Built With
 
