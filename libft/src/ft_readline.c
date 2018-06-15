@@ -6,7 +6,7 @@
 /*   By: enennige <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 14:52:35 by enennige          #+#    #+#             */
-/*   Updated: 2018/05/15 14:57:09 by enennige         ###   ########.fr       */
+/*   Updated: 2018/05/25 15:16:46 by enennige         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ int ft_readline(const int fd, char **line)
             *line = buffer_line;
             return (1);
         }
-        //TODO: replace with better / faster / cleaner
-        //function to append char to end of string
         ft_addnfix(&buffer_line, buffer_char, 1, 2);
     }
     return (0);
